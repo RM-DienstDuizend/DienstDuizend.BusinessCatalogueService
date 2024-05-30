@@ -30,5 +30,5 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         push: true
-        tags: ${{ secrets.REGISTRY_LOGIN_SERVER }}/aspcoresample:${{ github.sha }}
-        file: aspnet-core-dotnet-core/Dockerfile
+        tags: ${{ secrets.REGISTRY_LOGIN_SERVER }}/business-catalogue-service:${{ github.sha }}
+        file: src/DienstDuizend.BusinessCatalogueService/Dockerfile
