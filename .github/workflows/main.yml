@@ -8,17 +8,19 @@ jobs:
     name: 'Docker Build and Push to ACR'
     runs-on: ubuntu-latest
     environment: production
- 
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+
     defaults:
       run:
         shell: bash
- 
+
+    env:
+      DIRECTORY_NAME: src/DienstDuizend.BusinessCatalogueService
+      IMAGE_NAME: business-catalogue-service
+
     steps:
-    # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v4
- 
+
     - name: 'Docker Login'
       uses: azure/docker-login@v1
       with:
@@ -30,5 +32,5 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         push: true
-        tags: ${{ secrets.REGISTRY_LOGIN_SERVER }}/business-catalogue-service:${{ github.sha }}
-        file: src/DienstDuizend.BusinessCatalogueService/Dockerfile
+        tags: ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest
+        file: ${{ env.DIRECTORY_NAME }}/Dockerfile
