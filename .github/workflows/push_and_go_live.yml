@@ -28,7 +28,7 @@ jobs:
         path: ~/.nuget/packages
         key: ${{ runner.os }}-nuget-${{ env.DIRECTORY_NAME }} 
         restore-keys: |      
-          ${{ runner.os }}-nuget-
+          ${{ runner.os }}-nuget-${{ env.DIRECTORY_NAME }} 
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
@@ -41,6 +41,18 @@ jobs:
 
     - name: Test
       run: dotnet test --no-build --no-restore --configuration Release
+
+    - name: SonarCloud Scan
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        SONAR_PROJECT_KEY: "DD_BusinessCatalogueService"
+      run: |
+        dotnet tool install --global dotnet-sonarscanner
+        export PATH="$PATH:/home/runner/.dotnet/tools"
+        dotnet sonarscanner begin /k:"${SONAR_PROJECT_KEY}" /d:sonar.host.url="${SONAR_HOST_URL}" /d:sonar.login="${SONAR_TOKEN}"
+        dotnet build --no-restore --configuration Release
+        dotnet sonarscanner end /d:sonar.login="${SONAR_TOKEN}"
       
     - name: 'Docker Login'
       uses: azure/docker-login@v1
