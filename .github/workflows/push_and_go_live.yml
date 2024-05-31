@@ -13,7 +13,7 @@ jobs:
 
     defaults:
       run:
-        shell: bash
+        shell: cmd
 
     env:
       DIRECTORY_NAME: DienstDuizend.BusinessCatalogueService
