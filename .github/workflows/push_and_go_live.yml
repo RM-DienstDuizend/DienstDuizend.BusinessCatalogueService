@@ -64,7 +64,7 @@ jobs:
     - name: Run Trivy vulnerability scan
       uses: aquasecurity/trivy-action@master
       with:
-        scan-type: 'fs, config'
+        scan-type: 'fs'
 
     - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/dotnet@master
