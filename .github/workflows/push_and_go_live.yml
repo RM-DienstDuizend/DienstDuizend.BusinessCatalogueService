@@ -64,7 +64,7 @@ jobs:
 
     - name: Run Trivy vulnerability scanner in repo mode
       uses: aquasecurity/trivy-action@0.20.0
-       with:
+      with:
         scan-type: 'fs'
         ignore-unfixed: true
         format: 'sarif'
