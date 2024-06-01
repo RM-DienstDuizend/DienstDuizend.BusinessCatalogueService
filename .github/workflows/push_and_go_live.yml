@@ -30,7 +30,7 @@ jobs:
         path: ~/.nuget/packages
         key: ${{ runner.os }}-nuget-${{ env.DIRECTORY_NAME }} 
         restore-keys: |      
-          ${{ runner.os }}-nuget-${{ env.DIRECTORY_NAME }}
+          ${{ runner.os }}-nuget-${{ env.DIRECTORY_NAME }} 
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
@@ -61,26 +61,10 @@ jobs:
         dotnet build --no-restore --configuration Release
         dotnet sonarscanner end /d:sonar.login="${SONAR_TOKEN}"
 
-    - name: Run Trivy scanner
-      uses: aquasecurity/trivy-action@0.20.0
+    - name: Run Trivy vulnerability scan
+      uses: aquasecurity/trivy-action@master
       with:
-        scan-type: config
-        hide-progress: true
-        output: trivy.txt
-
-    - name: Publish Trivy Output to Summary
-      run: |
-        if [[ -s trivy.txt ]]; then
-          {
-            echo "### Security Output"
-            echo "<details><summary>Click to expand</summary>"
-            echo ""
-            echo '```terraform'
-            cat trivy.txt
-            echo '```'
-            echo "</details>"
-          } >> $GITHUB_STEP_SUMMARY
-        fi
+        scan-type: 'fs, config'
 
     - name: 'Docker Login'
       uses: azure/docker-login@v1
