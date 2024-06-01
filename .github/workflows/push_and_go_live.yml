@@ -62,14 +62,11 @@ jobs:
         dotnet build --no-restore --configuration Release
         dotnet sonarscanner end /d:sonar.login="${SONAR_TOKEN}"
 
-    - name: Run Trivy vulnerability scanner in repo mode
-      uses: aquasecurity/trivy-action@0.20.0
+    - name: Run Trivy vulnerability scan
+      uses: aquasecurity/trivy-action@master
       with:
         scan-type: 'fs'
-        ignore-unfixed: true
-        format: 'sarif'
-        output: 'trivy-results.sarif'
-        severity: 'CRITICAL'
+        path: './'
       
     - name: 'Docker Login'
       uses: azure/docker-login@v1
