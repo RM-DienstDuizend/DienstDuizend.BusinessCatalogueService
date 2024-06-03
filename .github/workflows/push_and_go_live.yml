@@ -18,6 +18,7 @@ jobs:
     env:
       DIRECTORY_NAME: DienstDuizend.BusinessCatalogueService
       IMAGE_NAME: business-catalogue-service
+      SONAR_PROJECT_KEY: DD_BusinessCatalogueService
       
     steps:
     - uses: actions/checkout@v4
@@ -52,8 +53,7 @@ jobs:
     - name: SonarCloud Scan
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        SONAR_PROJECT_KEY: "DD_BusinessCatalogueService"
+        SONAR_PROJECT_KEY: ${{env.SONAR_PROJECT_KEY}}
       run: |
         dotnet tool install --global dotnet-sonarscanner
         export PATH="$PATH:/home/runner/.dotnet/tools"
