@@ -52,7 +52,7 @@ jobs:
     - name: SonarCloud Scan
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_PROJECT_KEY: "RM-DienstDuizend_DienstDuizend.BusinessCatalogueServic"
+        SONAR_PROJECT_KEY: "RM-DienstDuizend_DienstDuizend.BusinessCatalogueService"
       run: |
         dotnet tool install --global dotnet-sonarscanner
         export PATH="$PATH:/home/runner/.dotnet/tools"
