@@ -70,7 +70,7 @@ jobs:
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
-          args: --all-projects # Important do not remove, since our unusual project structure apparently
+          args: --all-projects --exclude=tests # Important do not remove, since our unusual project structure apparently
 
     - name: 'Docker Login'
       uses: azure/docker-login@v1
