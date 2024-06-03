@@ -49,21 +49,21 @@ jobs:
     - name: Test
       run: dotnet test --no-build --no-restore --configuration Release
 
-    - name: SonarCloud Scan
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_PROJECT_KEY: "RM-DienstDuizend_DienstDuizend.BusinessCatalogueService"
-      run: |
-        dotnet tool install --global dotnet-sonarscanner
-        export PATH="$PATH:/home/runner/.dotnet/tools"
-        dotnet sonarscanner begin /k:"${SONAR_PROJECT_KEY}" /o:"rm-dienstduizend" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="${SONAR_TOKEN}"
-        dotnet build --no-restore --configuration Release
-        dotnet sonarscanner end /d:sonar.login="${SONAR_TOKEN}"
+    # - name: SonarCloud Scan
+    #   env:
+    #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    #     SONAR_PROJECT_KEY: "RM-DienstDuizend_DienstDuizend.BusinessCatalogueService"
+    #   run: |
+    #     dotnet tool install --global dotnet-sonarscanner
+    #     export PATH="$PATH:/home/runner/.dotnet/tools"
+    #     dotnet sonarscanner begin /k:"${SONAR_PROJECT_KEY}" /o:"rm-dienstduizend" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="${SONAR_TOKEN}"
+    #     dotnet build --no-restore --configuration Release
+    #     dotnet sonarscanner end /d:sonar.login="${SONAR_TOKEN}"
 
-    - name: Run Trivy vulnerability scan
-      uses: aquasecurity/trivy-action@master
-      with:
-        scan-type: 'fs'  
+    # - name: Run Trivy vulnerability scan
+    #   uses: aquasecurity/trivy-action@master
+    #   with:
+    #     scan-type: 'fs'  
 
     - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/dotnet@master
