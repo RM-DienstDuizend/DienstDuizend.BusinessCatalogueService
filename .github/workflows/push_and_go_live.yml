@@ -49,6 +49,11 @@ jobs:
     - name: Test
       run: dotnet test --no-build --no-restore --configuration Release
 
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/dotnet@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}      
+
     - name: SonarCloud Scan
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -63,12 +68,7 @@ jobs:
     - name: Run Trivy vulnerability scan
       uses: aquasecurity/trivy-action@master
       with:
-        scan-type: 'fs'
-
-    - name: Run Snyk to check for vulnerabilities
-      uses: snyk/actions/dotnet@master
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}        
+        scan-type: 'fs'  
 
     - name: 'Docker Login'
       uses: azure/docker-login@v1
