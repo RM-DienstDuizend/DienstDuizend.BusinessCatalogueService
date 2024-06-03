@@ -65,15 +65,12 @@ jobs:
       with:
         scan-type: 'fs'  
 
-    - name: Restore dependencies
-      run: dotnet restore
-
     - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/dotnet@master
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
-          args: --all-projects
+          args: --all-projects # Important do not remove, since our unusual project structure apparently
 
     - name: 'Docker Login'
       uses: azure/docker-login@v1
