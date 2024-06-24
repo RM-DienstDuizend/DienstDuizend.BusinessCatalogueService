@@ -46,8 +46,11 @@ jobs:
     - name: Build
       run: dotnet build --no-restore --configuration Release
 
-    - name: Test
-      run: dotnet test --no-build --no-restore --configuration Release
+    - name: Unit Testing
+      run: dotnet test ./tests/${{ env.DIRECTORY_NAME }}.UnitTests/${{ env.DIRECTORY_NAME }}.UnitTests.csproj --no-build --no-restore --configuration Release 
+
+    - name: Integration Testing
+      run: dotnet test ./tests/${{ env.DIRECTORY_NAME }}.IntegrationTests/${{ env.DIRECTORY_NAME }}.IntegrationTests.csproj --no-build --no-restore --configuration Release 
 
     - name: SonarCloud Scan
       env:
@@ -55,9 +58,11 @@ jobs:
         SONAR_PROJECT_KEY: "RM-DienstDuizend_DienstDuizend.BusinessCatalogueService"
       run: |
         dotnet tool install --global dotnet-sonarscanner
+        dotnet tool install --global dotnet-coverage
         export PATH="$PATH:/home/runner/.dotnet/tools"
         dotnet sonarscanner begin /k:"${SONAR_PROJECT_KEY}" /o:"rm-dienstduizend" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="${SONAR_TOKEN}"
         dotnet build --no-restore --configuration Release
+        dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
         dotnet sonarscanner end /d:sonar.login="${SONAR_TOKEN}"
 
     - name: Run Trivy vulnerability scan
