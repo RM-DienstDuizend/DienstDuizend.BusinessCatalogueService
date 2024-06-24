@@ -78,8 +78,11 @@ app.UseExceptionHandler();
 app.MapPrometheusScrapingEndpoint().AllowAnonymous();
 
 
+
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseResponseCaching();
 
 app.MapControllers();
 

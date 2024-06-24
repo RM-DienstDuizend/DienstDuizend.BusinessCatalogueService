@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DienstDuizend.BusinessCatalogueService.Features.Services.Endpoints.GetAllWithPagination;
 
 [ApiController, Route("/{BusinessId}/services")]
+[ResponseCache(Duration = 60)]
 [Authorize]
 public class GetAllWithPaginationEndpoint(GetAllWithPagination.Handler handler) : ControllerBase
 {

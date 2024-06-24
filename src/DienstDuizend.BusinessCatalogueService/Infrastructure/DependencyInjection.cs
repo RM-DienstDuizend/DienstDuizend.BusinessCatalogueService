@@ -20,6 +20,8 @@ public static class DependencyInjection
         services.AddHandlers();
         services.AddBehaviors();
 
+        services.AddResponseCaching();
+
         services.AddExceptionHandler<ApplicationExceptionHandler>();
         services.AddExceptionHandler<FluentValidationExceptionHandler>();
         
